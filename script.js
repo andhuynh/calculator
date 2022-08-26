@@ -19,9 +19,46 @@ operators.forEach((button) => {
     button.addEventListener('click', () => setOperator(button.textContent));
 });
 
-equal.addEventListener('click', () => operate(operation, first, second));
+equal.addEventListener('click', () => solve());
 
 clear.addEventListener('click', () => clearScreen());
+
+// Display functions
+function inputNum(num){
+    screen.textContent += num;
+}
+
+function setOperator(operator){
+    if(operation != null && screen.textContent != ''){
+        second = screen.textContent;
+        document.getElementById('second').textContent += second;
+        operate(operation, parseInt(first), parseInt(second));
+        return;
+    }
+    if(screen.textContent != null){
+        first = screen.textContent;
+        operation = operator;
+        document.getElementById('first').textContent += first;
+        document.getElementById('operator').textContent += operation;
+        clearScreen();
+    }
+}
+
+function solve(){
+    if(operation != null && screen.textContent != ''){
+        second = screen.textContent;
+        document.getElementById('second').textContent += second;
+        operate(operation, parseInt(first), parseInt(second));
+    }
+}
+
+function showAns(result){
+    screen.textContent = result;
+}
+
+function clearScreen(){
+    screen.textContent = '';
+}
 
 // Basic calculation functions
 function add(a,b){
@@ -61,28 +98,4 @@ function operate(operator, a, b){
         default:
             return;
     }
-}
-
-// Display functions
-function inputNum(num){
-    screen.textContent += num;
-}
-
-function setOperator(operator){
-    if(first != null && screen.textContent != ''){
-        second = screen.textContent;
-        operate(operator, first, second);
-        return;
-    }
-    first = screen.textContent;
-    operation = operator;
-    clearScreen();
-}
-
-function showAns(result){
-    screen.textContent = result;
-}
-
-function clearScreen(){
-    screen.textContent = '';
 }
