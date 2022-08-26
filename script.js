@@ -2,6 +2,7 @@
 const nums = document.querySelectorAll('.num');
 const operators = document.querySelectorAll('.operation');
 const screen = document.getElementById('screen');
+const history = document.getElementById('history');
 const clear = document.getElementById('clear');
 const equal = document.getElementById('solve');
 
@@ -21,7 +22,10 @@ operators.forEach((button) => {
 
 equal.addEventListener('click', () => solve());
 
-clear.addEventListener('click', () => clearScreen());
+clear.addEventListener('click', () => {
+    clearScreen();
+    reset();
+});
 
 // Display functions
 function inputNum(num){
@@ -31,15 +35,16 @@ function inputNum(num){
 function setOperator(operator){
     if(operation != null && screen.textContent != ''){
         second = screen.textContent;
-        document.getElementById('second').textContent += second;
-        operate(operation, parseInt(first), parseInt(second));
+        let ans = operate(operation, parseInt(first), parseInt(second));
+        showAns(ans);
+        reset();
+        first = ans;
         return;
     }
     if(screen.textContent != null){
         first = screen.textContent;
         operation = operator;
-        document.getElementById('first').textContent += first;
-        document.getElementById('operator').textContent += operation;
+        history.textContent += first + ' ' + operation;
         clearScreen();
     }
 }
@@ -47,8 +52,8 @@ function setOperator(operator){
 function solve(){
     if(operation != null && screen.textContent != ''){
         second = screen.textContent;
-        document.getElementById('second').textContent += second;
-        operate(operation, parseInt(first), parseInt(second));
+        let ans = operate(operation, parseInt(first), parseInt(second));
+        showAns(ans);
     }
 }
 
@@ -81,20 +86,22 @@ function divide(a,b){
     return a / b;
 }
 
+function reset(){
+    first = null;
+    second = null;
+    operation = null;
+}
+
 function operate(operator, a, b){
     switch(operator){
         case '+':
-            showAns(add(a,b));
-            break;
+            return add(a,b);
         case '-':
-            showAns(subtract(a,b));
-            break;
+            return subtract(a,b);
         case '*':
-            showAns(multiply(a,b));
-            break;
+            return multiply(a,b);
         case '/':
-            showAns(divide(a,b));
-            break;
+            return divide(a,b);
         default:
             return;
     }
