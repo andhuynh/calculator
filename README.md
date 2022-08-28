@@ -1,2 +1,2 @@
-# top-calculator
-Calculator project for the Odin Project
+# calculator 
+calculator project
