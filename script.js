@@ -13,7 +13,12 @@ let operation = null;
 
 // Button functions
 nums.forEach((button) => {
-    button.addEventListener('click', () => inputNum(button.textContent));
+    button.addEventListener('click', () => {
+        if(first != null){
+            screen.textContent = '';
+        }
+        inputNum(button.textContent)
+    });
 });
 
 operators.forEach((button) => {
@@ -24,6 +29,7 @@ equal.addEventListener('click', () => solve());
 
 clear.addEventListener('click', () => {
     clearScreen();
+    history.textContent = '';
     reset();
 });
 
@@ -35,10 +41,13 @@ function inputNum(num){
 function setOperator(operator){
     if(operation != null && screen.textContent != ''){
         second = screen.textContent;
-        let ans = operate(operation, parseInt(first), parseInt(second));
+        let ans = operate(operation, parseFloat(first), parseFloat(second));
         showAns(ans);
+        history.textContent = ans + ' ' + operator;
         reset();
         first = ans;
+        operation = operator;
+        clearScreen();
         return;
     }
     if(screen.textContent != null){
@@ -54,6 +63,8 @@ function solve(){
         second = screen.textContent;
         let ans = operate(operation, parseInt(first), parseInt(second));
         showAns(ans);
+        history.textContent = '';
+        reset();
     }
 }
 
