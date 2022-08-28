@@ -14,9 +14,6 @@ let operation = null;
 // Button functions
 nums.forEach((button) => {
     button.addEventListener('click', () => {
-        if(first != null){
-            screen.textContent = '';
-        }
         inputNum(button.textContent)
     });
 });
